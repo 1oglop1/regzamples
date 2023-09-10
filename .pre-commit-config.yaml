@@ -1,0 +1,30 @@
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.3.0
+    hooks:
+    -   id: check-yaml
+    -   id: end-of-file-fixer
+    -   id: trailing-whitespace
+# TODO Add Cargo FMT
+# Track Cargo.toml and execute hakari
+-   repo: local
+    hooks:
+    -   id: cargo-hakari
+        name: 
+        entry: Adding dependency requires updating workspace-hack
+        language: system
+        entry: cargo hakari generate && cargo hakari verify && cargo hakari manage-deps
+        files: '^Cargo.toml$'
+
+# -   repo: https://github.com/psf/black
+#     rev: 22.10.0
+#     hooks:
+#     -   id: black
+
+# -   repo: local
+#     hooks:
+#     -   id: check-requirements
+#         name: check requirements files
+#         language: system
+#         entry: python -m scripts.check_requirements --compare
+#         files: ^requirements.*\.txt$
