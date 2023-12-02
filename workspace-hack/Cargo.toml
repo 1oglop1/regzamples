@@ -8,9 +8,63 @@ version = "0.1.0"
 description = "workspace-hack package, managed by hakari"
 # You can choose to publish this crate: see https://docs.rs/cargo-hakari/latest/cargo_hakari/publishing.
 publish = false
-
 # The parts of the file between the BEGIN HAKARI SECTION and END HAKARI SECTION comments
 # are managed by hakari.
 
 ### BEGIN HAKARI SECTION
+[dependencies]
+getrandom = { version = "0.2.10", default-features = false, features = ["std"] }
+log = { version = "0.4.20", default-features = false, features = ["std"] }
+num-traits = { version = "0.2.16" }
+regex = { version = "1.9.5", default-features = false, features = ["std", "unicode-case", "unicode-perl"] }
+regex-automata = { version = "0.3.8", default-features = false, features = ["meta", "std", "unicode-case", "unicode-perl", "unicode-word-boundary"] }
+regex-syntax = { version = "0.7.5", default-features = false, features = ["std", "unicode-case", "unicode-perl"] }
+serde = { version = "1.0.188", features = ["alloc", "derive", "rc"] }
+serde_json = { version = "1.0.107", features = ["alloc", "raw_value"] }
+tokio = { version = "1.32.0", features = ["full"] }
+tracing = { version = "0.1.37", features = ["log"] }
+tracing-core = { version = "0.1.31" }
+
+[build-dependencies]
+proc-macro2 = { version = "1.0.66" }
+quote = { version = "1.0.33" }
+syn-f595c2ba2a3f28df = { package = "syn", version = "2.0.31", features = ["extra-traits", "full", "visit-mut"] }
+
+[target.x86_64-unknown-linux-gnu.dependencies]
+byteorder = { version = "1.4.3" }
+futures-io = { version = "0.3.29" }
+libc = { version = "0.2.147", features = ["extra_traits"] }
+memchr = { version = "2.6.3" }
+miniz_oxide = { version = "0.7.1", features = ["simd"] }
+mio = { version = "0.8.8", features = ["net", "os-ext"] }
+num-traits = { version = "0.2.16", default-features = false, features = ["i128"] }
+once_cell = { version = "1.18.0", features = ["unstable"] }
+regex = { version = "1.9.5" }
+regex-automata = { version = "0.3.8", default-features = false, features = ["dfa-onepass", "hybrid", "nfa-backtrack", "perf-inline", "perf-literal", "unicode"] }
+regex-syntax = { version = "0.7.5" }
+simd-adler32 = { version = "0.3.7" }
+
+[target.x86_64-unknown-linux-gnu.build-dependencies]
+libc = { version = "0.2.147", features = ["extra_traits"] }
+log = { version = "0.4.20", default-features = false, features = ["std"] }
+memchr = { version = "2.6.3" }
+once_cell = { version = "1.18.0", features = ["unstable"] }
+regex = { version = "1.9.5" }
+regex-automata = { version = "0.3.8", default-features = false, features = ["dfa-onepass", "hybrid", "meta", "nfa-backtrack", "perf-inline", "perf-literal", "unicode"] }
+regex-syntax = { version = "0.7.5" }
+syn-dff4ba8e3ae991db = { package = "syn", version = "1.0.109", features = ["extra-traits", "fold", "full", "visit"] }
+
+[target.x86_64-apple-darwin.dependencies]
+byteorder = { version = "1.4.3" }
+libc = { version = "0.2.147" }
+memchr = { version = "2.6.3" }
+miniz_oxide = { version = "0.7.1", features = ["simd"] }
+mio = { version = "0.8.8", features = ["net", "os-ext"] }
+num-traits = { version = "0.2.16", default-features = false, features = ["i128"] }
+once_cell = { version = "1.18.0", features = ["unstable"] }
+simd-adler32 = { version = "0.3.7" }
+
+[target.x86_64-apple-darwin.build-dependencies]
+libc = { version = "0.2.147" }
+
 ### END HAKARI SECTION

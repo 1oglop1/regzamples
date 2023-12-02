@@ -1,21 +1,27 @@
 repos:
--   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.3.0
-    hooks:
-    -   id: check-yaml
-    -   id: end-of-file-fixer
-    -   id: trailing-whitespace
+# -   repo: https://github.com/pre-commit/pre-commit-hooks
+#     rev: v2.3.0
+#     hooks:
+#     -   id: check-yaml
+#     -   id: end-of-file-fixer
+#     -   id: trailing-whitespace
 # TODO Add Cargo FMT
 # Track Cargo.toml and execute hakari
 -   repo: local
     hooks:
     -   id: cargo-hakari
-        name: 
+        name: cargo hakari - workspace hack
         entry: Adding dependency requires updating workspace-hack
         language: system
-        entry: cargo hakari generate && cargo hakari verify && cargo hakari manage-deps
+        entry: bash -c 'cargo hakari generate' --
+          #  && cargo hakari verify && cargo hakari manage-deps
         files: '^Cargo.toml$'
-
+        # args: ["--"]
+        verbose: true
+# -   repo: meta
+#     hooks:
+#     -   id: identity
+#         files: '^Cargo.toml$'
 # -   repo: https://github.com/psf/black
 #     rev: 22.10.0
 #     hooks:
