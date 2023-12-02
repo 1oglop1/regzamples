@@ -1,0 +1,32 @@
+[package]
+name = "mcdld"
+version = "0.1.0"
+edition = "2021"
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[package.metadata.cargo-machete]
+ignored = ["workspace-hack"]
+
+[dependencies]
+
+chrono = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+serde_urlencoded = { workspace = true }
+ureq = { workspace = true }
+serde_path_to_error = { workspace = true }
+clap = { workspace = true }
+tokio = { workspace = true }
+async-stream = { workspace = true }
+
+reqwest = { workspace = true }
+
+eyre = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+futures-util = { workspace = true }
+futures = { workspace = true }
+futures-core = { workspace = true }
+
+workspace-hack = { version = "0.1", path = "../../workspace-hack" }
+tracing-serde-structured = "0.2.0"
