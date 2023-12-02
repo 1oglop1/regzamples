@@ -8,10 +8,6 @@ use std::io::Write;
 
 
 use reqwest::{Client};
-// use indicatif::{ProgressBar, ProgressStyle};
-// use futures_util::StreamExt;
-
-
 
 use futures::stream::{Stream, StreamExt};
 

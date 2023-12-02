@@ -18,6 +18,7 @@ serde_path_to_error = { workspace = true }
 clap = { workspace = true }
 tokio = { workspace = true }
 async-stream = { workspace = true }
+logging = { path = "../../libs/logging" }
 
 reqwest = { workspace = true }
 
@@ -30,3 +31,10 @@ futures-core = { workspace = true }
 
 workspace-hack = { version = "0.1", path = "../../workspace-hack" }
 tracing-serde-structured = "0.2.0"
+ratatui = { version = "0.23.0", features = ["all-widgets"] }
+crossterm = "0.27"
+
+
+[dev-dependencies]
+logging = { path = "../../libs/logging", features = ["test"] }
+cli = { path = "../../libs/cli", features = ["test"] }

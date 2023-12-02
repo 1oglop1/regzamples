@@ -1,10 +1,7 @@
 [workspace]
 members = [
     "crates/*",
-
-    "libs/cli",
-    "libs/logging",
-    # "libs/*", 
+    "libs/dummy_lib",
     "workspace-hack",
 ]
 resolver = "2"
