@@ -5,13 +5,21 @@ repos:
 #     -   id: check-yaml
 #     -   id: end-of-file-fixer
 #     -   id: trailing-whitespace
-# TODO Add Cargo FMT
+-   repo: local
+    hooks:
+    -   id: cargo-sort
+        name: cargo sort cargo.toml files
+        language: system
+        entry: bash -c 'cargo sort' --
+        files: '^Cargo.toml$'
+        # args: ["--"]
+        verbose: true
 # Track Cargo.toml and execute hakari
 -   repo: local
     hooks:
     -   id: cargo-hakari
         name: cargo hakari - workspace hack
-        entry: Adding dependency requires updating workspace-hack
+#        : Adding dependency requires updating workspace-hack
         language: system
         entry: bash -c 'cargo hakari generate' --
           #  && cargo hakari verify && cargo hakari manage-deps
