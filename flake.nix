@@ -2,10 +2,7 @@
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixpkgs-mozilla = {
-      url = "github:mozilla/nixpkgs-mozilla";
-      flake = false;
-    };
+    rust-overlay.url = "github:oxalica/rust-overlay";
     crane = {
       url = "github:ipetkov/crane";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -16,29 +13,25 @@
     };
   };
 
-  outputs = { self, flake-utils, nixpkgs, nixpkgs-mozilla, crane, advisory-db } @ inputs:
+  outputs = { self, flake-utils, nixpkgs, rust-overlay, crane, advisory-db } @ inputs:
     flake-utils.lib.eachSystem [
       flake-utils.lib.system.aarch64-darwin
       flake-utils.lib.system.x86_64-linux
     ]
       (system:
         let
+          traceAndReturn = e: builtins.trace (builtins.tryEval e) e;
           pkgs = (import nixpkgs) {
             inherit system;
 
             overlays = [
-              (import nixpkgs-mozilla)
+              (import rust-overlay)
             ];
           };
 
-          toolchain = (pkgs.rustChannelOf {
-            rustToolchain = ./rust-toolchain.toml;  # if git repo => local file has to be tracked in git
-            sha256 = "sha256-Q9UgzzvxLi4x9aWUJTn+/5EXekC98ODRU1TwhUs9RnY=";
-            #        ^ After you run `nix build`, replace this with the actual
-            #          hash from the error message
-          });
+          rustToolchain = pkgs.rust-bin.fromRustupToolchainFile ./rust-toolchain.toml;
 
-          craneLib = crane.lib.${system}.overrideToolchain toolchain.rust;
+          craneLib = crane.lib.${system}.overrideToolchain rustToolchain;
 
           # Some non-rust files are read during compilation so we have to make
           # sure they are included in the nix environment.
@@ -106,7 +99,7 @@
               ];
           };
 
-          traceAndReturn = e: builtins.trace (builtins.tryEval e) e;
+          # traceAndReturn = e: builtins.trace (builtins.tryEval e) e;
 
           matrix =
             (builtins.foldl'
@@ -238,8 +231,7 @@
 
           devShell = pkgs.mkShell {
             packages = [
-              toolchain.rust
-              toolchain.rust-src
+              rustToolchain
               pkgs.cargo-machete
               pkgs.cargo-nextest
               pkgs.cargo-hakari
@@ -248,7 +240,7 @@
             nativeBuildInputs = commonArgs.nativeBuildInputs;
             shellHook = ''
               export SSL_CERT_FILE="${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
-              export RUST_SRC_PATH="${toolchain.rust-src}/lib/rustlib/src/rust/library";
+              export RUST_SRC_PATH="${rustToolchain}/lib/rustlib/src/rust/library";
             '';
           };
         });
